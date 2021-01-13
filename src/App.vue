@@ -5,13 +5,19 @@
     </Sidebar>
 
     <MainContent>
-      MainContent
+      <div
+        v-for="user in users"
+        :key="user.id">
+        {{ user.name }}
+      </div>
     </MainContent>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import useUsers from './composables/useUsers';
+
 import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
@@ -23,6 +29,14 @@ export default defineComponent({
     Sidebar,
     Header,
     MainContent,
+  },
+
+  setup() {
+    const { users } = useUsers();
+
+    return {
+      users,
+    };
   },
 });
 </script>
