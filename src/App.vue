@@ -2,25 +2,27 @@
   <div class="flex w-screen h-screen p-6 bg-gray-100">
     <Sidebar>
       <Header class="mb-8" />
+      <UserList
+        :users="users"
+        :selected-user="selectedUser"
+        @select="onUserSelect" />
     </Sidebar>
 
     <MainContent>
-      <div
-        v-for="user in users"
-        :key="user.id">
-        {{ user.name }}
-      </div>
+      MainContent
     </MainContent>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import useUsers from './composables/useUsers';
+import User from './interfaces/User';
 
 import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
+import UserList from './components/UserList.vue';
 
 export default defineComponent({
   name: 'App',
@@ -29,13 +31,21 @@ export default defineComponent({
     Sidebar,
     Header,
     MainContent,
+    UserList,
   },
 
   setup() {
     const { users } = useUsers();
+    const selectedUser = ref<User|null>(null);
+
+    const onUserSelect = (user: User) => {
+      selectedUser.value = user;
+    };
 
     return {
       users,
+      selectedUser,
+      onUserSelect,
     };
   },
 });
