@@ -17,6 +17,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import useUsers from './composables/useUsers';
+import usePosts from './composables/usePosts';
 import User from './interfaces/User';
 
 import Sidebar from './components/Sidebar.vue';
@@ -35,8 +36,9 @@ export default defineComponent({
   },
 
   setup() {
-    const { users } = useUsers();
     const selectedUser = ref<User|null>(null);
+    const { users } = useUsers();
+    const { posts } = usePosts(selectedUser);
 
     const onUserSelect = (user: User) => {
       selectedUser.value = user;
@@ -44,6 +46,7 @@ export default defineComponent({
 
     return {
       users,
+      posts,
       selectedUser,
       onUserSelect,
     };
