@@ -9,7 +9,7 @@
     </Sidebar>
 
     <MainContent>
-      MainContent
+      <PostList :posts="posts" />
     </MainContent>
   </div>
 </template>
@@ -24,6 +24,7 @@ import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
 import UserList from './components/UserList.vue';
+import PostList from './components/PostList.vue';
 
 export default defineComponent({
   name: 'App',
@@ -33,6 +34,7 @@ export default defineComponent({
     Header,
     MainContent,
     UserList,
+    PostList,
   },
 
   setup() {

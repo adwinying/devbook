@@ -29,7 +29,7 @@ export default defineComponent({
 
     selectedUser: {
       type: Object as PropType<User|null>,
-      required: true,
+      default: null,
     },
   },
 
