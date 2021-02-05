@@ -15,4 +15,24 @@ export const fetchComments = async (query: FetchCommentsQuery = {}): Promise<Com
   return comments;
 };
 
+export interface CreateCommentBody {
+  postId: number;
+  name: string;
+  email: string;
+  body: string;
+}
+export const createComment = async (body: CreateCommentBody): Promise<Comment> => {
+  const url = `${apiEndpoint}/comments`;
+
+  const req = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+  });
+
+  const comment = req.json();
+
+  return comment;
+};
+
 export default null;
