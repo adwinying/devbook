@@ -5,22 +5,51 @@
       {{ post.title }}
     </h3>
 
-    <p>{{ post.body }}</p>
+    <p class="mb-2">
+      {{ post.body }}
+    </p>
+
+    <div class="text-right">
+      <comment-toggle-button
+        :is-active="shouldShowComments"
+        @toggle="onCommentsToggle" />
+    </div>
   </li>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import {
+  defineComponent,
+  PropType,
+  ref,
+} from 'vue';
 import Post from '../interfaces/Post';
+import CommentToggleButton from './CommentToggleButton.vue';
 
 export default defineComponent({
   name: 'PostListRow',
+
+  components: {
+    CommentToggleButton,
+  },
 
   props: {
     post: {
       type: Object as PropType<Post>,
       required: true,
     },
+  },
+
+  setup() {
+    const shouldShowComments = ref(false);
+    const onCommentsToggle = () => {
+      shouldShowComments.value = !shouldShowComments.value;
+    };
+
+    return {
+      shouldShowComments,
+      onCommentsToggle,
+    };
   },
 });
 </script>

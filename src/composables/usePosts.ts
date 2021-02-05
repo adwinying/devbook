@@ -11,13 +11,11 @@ import { fetchPosts, FetchPostsQuery } from '../api/post';
 
 interface UsePosts {
   posts: Ref<Post[]>;
-  selectedPost: Ref<Post|null>;
   hasNoPosts: ComputedRef<boolean>;
 }
 
 export default function usePosts(user: Ref<User|null>): UsePosts {
   const posts = ref<Post[]>([]);
-  const selectedPost = ref<Post|null>(null);
 
   watch(user, async () => {
     const query: FetchPostsQuery = { userId: user.value?.id };
@@ -29,7 +27,6 @@ export default function usePosts(user: Ref<User|null>): UsePosts {
 
   return {
     posts,
-    selectedPost,
     hasNoPosts,
   };
 }

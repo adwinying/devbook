@@ -32,7 +32,6 @@
 import { defineComponent } from 'vue';
 import useUsers from './composables/useUsers';
 import usePosts from './composables/usePosts';
-import useComments from './composables/useComments';
 
 import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
@@ -61,11 +60,8 @@ export default defineComponent({
 
     const {
       posts,
-      selectedPost,
       hasNoPosts,
     } = usePosts(selectedUser);
-
-    const { comments } = useComments(selectedPost);
 
     return {
       users,
@@ -75,8 +71,6 @@ export default defineComponent({
 
       posts,
       hasNoPosts,
-
-      comments,
     };
   },
 });
