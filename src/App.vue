@@ -29,18 +29,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import useUsers from './composables/useUsers';
 import usePosts from './composables/usePosts';
 import useComments from './composables/useComments';
-import User from './interfaces/User';
 
 import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
 import UserList from './components/UserList.vue';
 import PostList from './components/PostList.vue';
-import Post from './interfaces/Post';
 
 export default defineComponent({
   name: 'App',
@@ -54,28 +52,31 @@ export default defineComponent({
   },
 
   setup() {
-    const selectedUser = ref<User|null>(null);
-    const { users } = useUsers();
+    const {
+      users,
+      selectedUser,
+      isUserNotSelected,
+      onUserSelect,
+    } = useUsers();
 
-    const selectedPost = ref<Post|null>(null);
-    const { posts, hasNoPosts } = usePosts(selectedUser);
+    const {
+      posts,
+      selectedPost,
+      hasNoPosts,
+    } = usePosts(selectedUser);
 
     const { comments } = useComments(selectedPost);
 
-    const isUserNotSelected = computed(() => selectedUser.value === null);
-
-    const onUserSelect = (user: User) => {
-      selectedUser.value = user;
-    };
-
     return {
       users,
-      posts,
-      comments,
-      isUserNotSelected,
-      hasNoPosts,
       selectedUser,
+      isUserNotSelected,
       onUserSelect,
+
+      posts,
+      hasNoPosts,
+
+      comments,
     };
   },
 });
