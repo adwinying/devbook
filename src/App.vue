@@ -9,13 +9,27 @@
     </Sidebar>
 
     <MainContent>
-      <PostList :posts="posts" />
+      <div v-if="isUserNotSelected">
+        <h3 class="py-5 text-xl font-bold text-center">
+          Select a user to view posts.
+        </h3>
+      </div>
+
+      <div v-else-if="hasNoPosts">
+        <h3 class="py-5 text-xl font-bold text-center">
+          User has no posts.
+        </h3>
+      </div>
+
+      <PostList
+        v-else
+        :posts="posts" />
     </MainContent>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import useUsers from './composables/useUsers';
 import usePosts from './composables/usePosts';
 import User from './interfaces/User';
@@ -40,7 +54,9 @@ export default defineComponent({
   setup() {
     const selectedUser = ref<User|null>(null);
     const { users } = useUsers();
-    const { posts } = usePosts(selectedUser);
+    const { posts, hasNoPosts } = usePosts(selectedUser);
+
+    const isUserNotSelected = computed(() => selectedUser.value === null);
 
     const onUserSelect = (user: User) => {
       selectedUser.value = user;
@@ -49,6 +65,8 @@ export default defineComponent({
     return {
       users,
       posts,
+      isUserNotSelected,
+      hasNoPosts,
       selectedUser,
       onUserSelect,
     };
