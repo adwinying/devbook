@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-2 mx-1">
     <comment-list-row
       v-for="comment in comments"
       :key="comment.id"
