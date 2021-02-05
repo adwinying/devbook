@@ -4,7 +4,7 @@
       v-for="comment in comments"
       :key="comment.id"
       :comment="comment" />
-    <comment-form />
+    <comment-form @comment="onCommentAdd" />
   </div>
 </template>
 
@@ -31,10 +31,15 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { comments } = useComments(props.post);
+    const { comments, addComment } = useComments(props.post);
+
+    const onCommentAdd = (commentBody: string) => {
+      addComment(props.post, commentBody);
+    };
 
     return {
       comments,
+      onCommentAdd,
     };
   },
 });
