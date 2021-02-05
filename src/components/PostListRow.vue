@@ -14,6 +14,10 @@
         :is-active="shouldShowComments"
         @toggle="onCommentsToggle" />
     </div>
+
+    <comment-list
+      v-if="shouldShowComments"
+      :post="post" />
   </li>
 </template>
 
@@ -24,6 +28,7 @@ import {
   ref,
 } from 'vue';
 import Post from '../interfaces/Post';
+import CommentList from './CommentList.vue';
 import CommentToggleButton from './CommentToggleButton.vue';
 
 export default defineComponent({
@@ -31,6 +36,7 @@ export default defineComponent({
 
   components: {
     CommentToggleButton,
+    CommentList,
   },
 
   props: {

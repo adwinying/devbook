@@ -1,22 +1,31 @@
-import { ref, Ref, watch } from 'vue';
+import {
+  computed,
+  ComputedRef,
+  onMounted,
+  ref,
+} from 'vue';
 import Post from '../interfaces/Post';
 import Comment from '../interfaces/Comment';
 import { fetchComments, FetchCommentsQuery } from '../api/comment';
 
 interface UseComments {
-  comments: Ref<Comment[]>;
+  comments: ComputedRef<Comment[]>;
 }
 
-export default function useComments(post: Ref<Post|null>): UseComments {
+export default function useComments(post: Post): UseComments {
+  const numOfCommentsToShow = 3;
   const comments = ref<Comment[]>([]);
 
-  watch(post, async () => {
-    const query: FetchCommentsQuery = { postId: post.value?.id };
+  onMounted(async () => {
+    const query: FetchCommentsQuery = { postId: post.id };
 
     comments.value = await fetchComments(query);
   });
 
+  const displayedComments = computed(() => comments.value
+    .slice(0, numOfCommentsToShow));
+
   return {
-    comments,
+    comments: displayedComments,
   };
 }
