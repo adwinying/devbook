@@ -32,6 +32,7 @@
 import { computed, defineComponent, ref } from 'vue';
 import useUsers from './composables/useUsers';
 import usePosts from './composables/usePosts';
+import useComments from './composables/useComments';
 import User from './interfaces/User';
 
 import Sidebar from './components/Sidebar.vue';
@@ -39,6 +40,7 @@ import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
 import UserList from './components/UserList.vue';
 import PostList from './components/PostList.vue';
+import Post from './interfaces/Post';
 
 export default defineComponent({
   name: 'App',
@@ -54,7 +56,11 @@ export default defineComponent({
   setup() {
     const selectedUser = ref<User|null>(null);
     const { users } = useUsers();
+
+    const selectedPost = ref<Post|null>(null);
     const { posts, hasNoPosts } = usePosts(selectedUser);
+
+    const { comments } = useComments(selectedPost);
 
     const isUserNotSelected = computed(() => selectedUser.value === null);
 
@@ -65,6 +71,7 @@ export default defineComponent({
     return {
       users,
       posts,
+      comments,
       isUserNotSelected,
       hasNoPosts,
       selectedUser,
