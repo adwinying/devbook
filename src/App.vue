@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-screen h-screen p-6 bg-gray-100">
+  <div class="flex w-screen h-screen p-6 bg-gray-200">
     <Sidebar>
       <Header class="mb-8" />
       <UserList

@@ -1,10 +1,12 @@
 <template>
-  <ul>
-    <PostListRow
-      v-for="post in posts"
-      :key="post.id"
-      :post="post" />
-  </ul>
+  <div class="h-full overflow-y-scroll rounded-lg bg-white">
+    <ul>
+      <PostListRow
+        v-for="post in posts"
+        :key="post.id"
+        :post="post" />
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">

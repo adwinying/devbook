@@ -1,13 +1,11 @@
 <template>
   <li
-    class="mb-3">
-    <h3 class="text-xl font-bold mb-2">
+    class="px-3 py-4 border-b last:border-0">
+    <h3 class="text-lg font-bold leading-tight mb-2">
       {{ post.title }}
     </h3>
 
     <p>{{ post.body }}</p>
-
-    <hr>
   </li>
 </template>
 
